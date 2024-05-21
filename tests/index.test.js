@@ -1,4 +1,4 @@
-const Scoreboard = require('../src/index');
+const Scoreboard = require('../index');
 
 describe('Scoreboard', () => {
     let scoreboard;
