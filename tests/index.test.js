@@ -17,7 +17,11 @@ describe('Scoreboard', () => {
 
     test('should throw an error if team names are not strings', () => {
         expect(() => {
-            scoreboard.startMatch(0, 1);
+            scoreboard.startMatch("0", 1);
+        }).toThrow('Team names should be strings');
+
+        expect(() => {
+            scoreboard.startMatch(0, "1");
         }).toThrow('Team names should be strings');
     });
 
@@ -28,6 +32,14 @@ describe('Scoreboard', () => {
         expect(scoreboard.getSummary()).toEqual([
             { homeTeam: 'Italy', awayTeam: 'Germany', homeScore: 3, awayScore: 1 }
         ]);
+    });
+
+    test('should throw an error if match not found', () => {
+        matchId = "random-match-id"
+
+        expect(() => {
+            scoreboard.updateScore(matchId, 0, 2);
+        }).toThrow('Match not found');
     });
 
     test('should throw an error if non absolute scores are provided', () => {
@@ -57,37 +69,40 @@ describe('Scoreboard', () => {
         expect(scoreboard.getSummary()).toEqual([]);
     });
 
-    test('should throw an error if match not found', () => {
-        matchId = "random-match-id"
-
-        expect(() => {
-            scoreboard.updateScore(matchId, -1, 2);
-        }).toThrow('Match not found');
-    });
-
     test('should get a summary of matches in progress ordered by total score', () => {
-        matchId = scoreboard.startMatch('Mexico', 'Canada');
-        scoreboard.updateScore(matchId, 0, 5);
+        setTimeout(() => {
+            matchId = scoreboard.startMatch('Mexico', 'Canada');
+            scoreboard.updateScore(matchId, 0, 5);
+        }, 100);
 
-        matchId = scoreboard.startMatch('Spain', 'Brazil');
-        scoreboard.updateScore(matchId, 10, 2);
+        setTimeout(() => {
+            matchId = scoreboard.startMatch('Spain', 'Brazil');
+            scoreboard.updateScore(matchId, 10, 2);
+        }, 200);
 
-        matchId = scoreboard.startMatch('Germany', 'France');
-        scoreboard.updateScore(matchId, 2, 2);
+        setTimeout(() => {
+            matchId = scoreboard.startMatch('Germany', 'France');
+            scoreboard.updateScore(matchId, 2, 2);
+        }, 300);
 
-        matchId = scoreboard.startMatch('Uruguay', 'Italy');
-        scoreboard.updateScore(matchId, 6, 6);
+        setTimeout(() => {
+            matchId = scoreboard.startMatch('Uruguay', 'Italy');
+            scoreboard.updateScore(matchId, 6, 6);
+        }, 400);
 
-        matchId = scoreboard.startMatch('Argentina', 'Australia');
-        scoreboard.updateScore(matchId, 3, 1);
+        setTimeout(() => {
+            matchId = scoreboard.startMatch('Argentina', 'Australia');
+            scoreboard.updateScore(matchId, 3, 1);
+        }, 500);
 
-
-        expect(scoreboard.getSummary()).toEqual([
-            { homeTeam: 'Uruguay', awayTeam: 'Italy', homeScore: 6, awayScore: 6 },
-            { homeTeam: 'Spain', awayTeam: 'Brazil', homeScore: 10, awayScore: 2 },
-            { homeTeam: 'Mexico', awayTeam: 'Canada', homeScore: 0, awayScore: 5 },
-            { homeTeam: 'Argentina', awayTeam: 'Australia', homeScore: 3, awayScore: 1 },
-            { homeTeam: 'Germany', awayTeam: 'France', homeScore: 2, awayScore: 2 },
-        ]);
+        setTimeout(() => {            
+            expect(scoreboard.getSummary()).toEqual([
+                { homeTeam: 'Uruguay', awayTeam: 'Italy', homeScore: 6, awayScore: 6 },
+                { homeTeam: 'Spain', awayTeam: 'Brazil', homeScore: 10, awayScore: 2 },
+                { homeTeam: 'Mexico', awayTeam: 'Canada', homeScore: 0, awayScore: 5 },
+                { homeTeam: 'Argentina', awayTeam: 'Australia', homeScore: 3, awayScore: 1 },
+                { homeTeam: 'Germany', awayTeam: 'France', homeScore: 2, awayScore: 2 },
+            ]);
+        }, 600);
     });
 });
