@@ -32,4 +32,4 @@ scoreboard.getSummary();                              // Fetches the summary of 
 
 ## Notes
 
-Since I am storing data in memory, one of the tests did not work properly since it was dependent on a timestamp. To account for this I added a timeout function to simulate the delay that databases have in storing data. Although this solution is not optimal since it adds time to the resting pipeline, I opted for it since in a production environment this should not be an issue.
+Since I am storing data in memory, one of the tests did not work properly since it was dependent on a timestamp. To account for this I added a timeout function to simulate the delay that databases have in storing data. Although this solution is not optimal since it adds time to the testing pipeline, I opted for it since in a production environment this should not be an issue.
