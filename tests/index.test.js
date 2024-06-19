@@ -65,6 +65,12 @@ describe('Scoreboard', () => {
         }).toThrow('Scores must be absolute values');
     });
 
+    test('should throw error when attempting to finish non existent match', () => {
+        expect(() => {
+            scoreboard.finishMatch('random-match-id');
+        }).toThrow('Match not found');
+    });
+
     test('should finish an ongoing match', () => {
         const matchId = scoreboard.startMatch('Spain', 'Croatia');
         scoreboard.finishMatch(matchId);
