@@ -28,6 +28,24 @@ describe('Scoreboard', () => {
         }).toThrow('Team names should be strings');
     });
 
+    test('should not start a match if the same team is playing on both sides', () => {
+        expect(() => {
+            scoreboard.startMatch('Italy', 'Italy');
+        }).toThrow('The same team cannot play on both sides');
+    });
+
+    test('should not start a match if one or both teams are already playing', () => {
+        scoreboard.startMatch('Italy', 'Germany');
+
+        expect(() => {
+            scoreboard.startMatch('Italy', 'Albania');
+        }).toThrow('Italy is already in a match');
+
+        expect(() => {
+            scoreboard.startMatch('Germany', 'Albania');
+        }).toThrow('Germany is already in a match');
+    });
+
     test('should update the score of an ongoing match', () => {
         let matchId = scoreboard.startMatch('Italy', 'Germany');
         scoreboard.updateScore(matchId, 3, 1);

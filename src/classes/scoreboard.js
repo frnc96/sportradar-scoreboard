@@ -12,6 +12,9 @@ class Scoreboard {
             throw new Error('Team names should be strings');
         }
 
+        // Todo - team names should not match
+        // Todo - Either team can't participate in multiple matches
+
         const match = new Match(homeTeam, awayTeam);
         store.addMatch(match)
 
