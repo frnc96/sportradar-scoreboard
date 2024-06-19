@@ -1,9 +1,11 @@
-const { v4: uuidv4 } = require('uuid');
+import { v4 as uuidv4 } from 'uuid';
+import store from '../store';
 
 
 class Match {
     constructor(homeTeam, awayTeam) {
         this.uuid = uuidv4()
+        this.index = store.getState().matches.length;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.homeScore = 0;
@@ -22,4 +24,4 @@ class Match {
 }
 
 
-module.exports = Match;
+export default Match;

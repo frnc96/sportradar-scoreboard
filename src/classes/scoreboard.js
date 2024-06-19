@@ -1,15 +1,9 @@
-const Match = require('./match');
-const {
-    isValidTeamName,
-    isValidScore
-} = require('../utils/validations');
+import Match from './match';
+import store from '../store';
+import { isValidTeamName, isValidScore, isAlreadyPlaying } from '../utils/validations';
 
 
 class Scoreboard {
-    constructor() {
-        this.matches = [];
-    }
-
     startMatch(homeTeam, awayTeam) {
         if (
             !isValidTeamName(homeTeam) ||
@@ -18,8 +12,18 @@ class Scoreboard {
             throw new Error('Team names should be strings');
         }
 
+        if (homeTeam == awayTeam) {
+            throw new Error('The same team cannot play on both sides');
+        }
+
+        const dupTeams = isAlreadyPlaying(homeTeam, awayTeam);
+        if (dupTeams.length > 0) {
+            const teamNames = dupTeams.join(", ")
+            throw new Error(`The following teams are already in a match [${teamNames}]`);
+        }
+
         const match = new Match(homeTeam, awayTeam);
-        this.matches.push(match);
+        store.addMatch(match)
 
         return match.uuid;
     }
@@ -32,33 +36,27 @@ class Scoreboard {
             throw new Error('Scores must be absolute values');
         }
 
-        const match = this.matches.find(
-            match => match.uuid === matchId
-        );
+        const match = store.getMatch(matchId)
 
-        if (!match) {
-            throw new Error('Match not found');
-        }
-
-        if (match) {
-            match.updateScore(homeScore, awayScore);
-        }
+        match.updateScore(homeScore, awayScore);
+        store.updateMatch(match)
     }
 
     finishMatch(matchId) {
-        this.matches = this.matches.filter(
-            match => !(match.uuid === matchId)
-        );
+        const match = store.getMatch(matchId)
+        store.deleteMatch(match)
     }
 
     getSummary() {
-        return this.matches
+        return store
+            .getState()
+            .matches
             .slice()
             .sort((a, b) => {
                 const scoreDifference = b.getTotalScore() - a.getTotalScore();
 
                 if (scoreDifference === 0) {
-                    return b.timestamp - a.timestamp;
+                    return b.index - a.index;
                 }
 
                 return scoreDifference;
@@ -73,4 +71,4 @@ class Scoreboard {
 }
 
 
-module.exports = Scoreboard;
+export default Scoreboard;
