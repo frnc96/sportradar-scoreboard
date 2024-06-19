@@ -1,6 +1,6 @@
 import Match from './match';
 import store from '../store';
-import { isValidTeamName, isValidScore } from '../utils/validations';
+import { isValidTeamName, isValidScore, isAlreadyPlaying } from '../utils/validations';
 
 
 class Scoreboard {
@@ -12,8 +12,15 @@ class Scoreboard {
             throw new Error('Team names should be strings');
         }
 
-        // Todo - team names should not match
-        // Todo - Either team can't participate in multiple matches
+        if (homeTeam == awayTeam) {
+            throw new Error('The same team cannot play on both sides');
+        }
+
+        const dupTeams = isAlreadyPlaying(homeTeam, awayTeam);
+        if (dupTeams.length > 0) {
+            const teamNames = dupTeams.join(", ")
+            throw new Error(`The following teams are already in a match [${teamNames}]`);
+        }
 
         const match = new Match(homeTeam, awayTeam);
         store.addMatch(match)

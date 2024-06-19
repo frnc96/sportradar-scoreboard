@@ -36,14 +36,23 @@ describe('Scoreboard', () => {
 
     test('should not start a match if one or both teams are already playing', () => {
         scoreboard.startMatch('Italy', 'Germany');
+        scoreboard.startMatch('Spain', 'Croatia');
 
         expect(() => {
             scoreboard.startMatch('Italy', 'Albania');
-        }).toThrow('Italy is already in a match');
+        }).toThrow('The following teams are already in a match [Italy]');
 
         expect(() => {
             scoreboard.startMatch('Germany', 'Albania');
-        }).toThrow('Germany is already in a match');
+        }).toThrow('The following teams are already in a match [Germany]');
+
+        expect(() => {
+            scoreboard.startMatch('Italy', 'Spain');
+        }).toThrow('The following teams are already in a match [Italy, Spain]');
+
+        expect(() => {
+            scoreboard.startMatch('Italy', 'Germany');
+        }).toThrow('The following teams are already in a match [Italy, Germany]');
     });
 
     test('should update the score of an ongoing match', () => {
