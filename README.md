@@ -24,7 +24,7 @@ const Scoreboard = require('sportradar-scoreboard');
 
 scoreboard = new Scoreboard();
 
-matchId = scoreboard.startMatch('Team A', 'Team B');  // Starts a match and saves it in memory
+let matchId = scoreboard.startMatch('Team A', 'Team B');  // Starts a match and saves it in memory
 scoreboard.updateScore(matchId, 1, 1);                // Updates the score of a certain match
 scoreboard.finishMatch(matchId);                      // Finishes a match therefore removing it from the scoreboard
 scoreboard.getSummary();                              // Fetches the summary of all active matches in the scoreboard
