@@ -1,10 +1,13 @@
 import Scoreboard from '../index';
+import store from '../src/store';
+
 
 describe('Scoreboard', () => {
     let scoreboard;
 
     beforeEach(() => {
         scoreboard = new Scoreboard();
+        store.reset();
     });
 
     test('should start a new match', () => {
