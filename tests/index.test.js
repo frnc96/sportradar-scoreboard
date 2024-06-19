@@ -106,39 +106,27 @@ describe('Scoreboard', () => {
     });
 
     test('should get a summary of matches in progress ordered by total score', () => {
-        setTimeout(() => {
-            let matchId = scoreboard.startMatch('Mexico', 'Canada');
-            scoreboard.updateScore(matchId, 0, 5);
-        }, 100);
+        let matchId = scoreboard.startMatch('Mexico', 'Canada');
+        scoreboard.updateScore(matchId, 0, 5);
 
-        setTimeout(() => {
-            let matchId = scoreboard.startMatch('Spain', 'Brazil');
-            scoreboard.updateScore(matchId, 10, 2);
-        }, 200);
+        let matchId1 = scoreboard.startMatch('Spain', 'Brazil');
+        scoreboard.updateScore(matchId1, 10, 2);
 
-        setTimeout(() => {
-            let matchId = scoreboard.startMatch('Germany', 'France');
-            scoreboard.updateScore(matchId, 2, 2);
-        }, 300);
+        let matchId2 = scoreboard.startMatch('Germany', 'France');
+        scoreboard.updateScore(matchId2, 2, 2);
 
-        setTimeout(() => {
-            let matchId = scoreboard.startMatch('Uruguay', 'Italy');
-            scoreboard.updateScore(matchId, 6, 6);
-        }, 400);
+        let matchId3 = scoreboard.startMatch('Uruguay', 'Italy');
+        scoreboard.updateScore(matchId3, 6, 6);
 
-        setTimeout(() => {
-            let matchId = scoreboard.startMatch('Argentina', 'Australia');
-            scoreboard.updateScore(matchId, 3, 1);
-        }, 500);
+        let matchId4 = scoreboard.startMatch('Argentina', 'Australia');
+        scoreboard.updateScore(matchId4, 3, 1);
 
-        setTimeout(() => {            
-            expect(scoreboard.getSummary()).toEqual([
-                { homeTeam: 'Uruguay', awayTeam: 'Italy', homeScore: 6, awayScore: 6 },
-                { homeTeam: 'Spain', awayTeam: 'Brazil', homeScore: 10, awayScore: 2 },
-                { homeTeam: 'Mexico', awayTeam: 'Canada', homeScore: 0, awayScore: 5 },
-                { homeTeam: 'Argentina', awayTeam: 'Australia', homeScore: 3, awayScore: 1 },
-                { homeTeam: 'Germany', awayTeam: 'France', homeScore: 2, awayScore: 2 },
-            ]);
-        }, 600);
+        expect(scoreboard.getSummary()).toEqual([
+            { homeTeam: 'Uruguay', awayTeam: 'Italy', homeScore: 6, awayScore: 6 },
+            { homeTeam: 'Spain', awayTeam: 'Brazil', homeScore: 10, awayScore: 2 },
+            { homeTeam: 'Mexico', awayTeam: 'Canada', homeScore: 0, awayScore: 5 },
+            { homeTeam: 'Argentina', awayTeam: 'Australia', homeScore: 3, awayScore: 1 },
+            { homeTeam: 'Germany', awayTeam: 'France', homeScore: 2, awayScore: 2 },
+        ]);
     });
 });

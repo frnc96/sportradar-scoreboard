@@ -56,7 +56,7 @@ class Scoreboard {
                 const scoreDifference = b.getTotalScore() - a.getTotalScore();
 
                 if (scoreDifference === 0) {
-                    return b.timestamp - a.timestamp;
+                    return b.index - a.index;
                 }
 
                 return scoreDifference;
