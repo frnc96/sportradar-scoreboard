@@ -1,3 +1,3 @@
-const Scoreboard = require('./src/classes/scoreboard');
+import Scoreboard from './src/classes/scoreboard';
 
-module.exports = Scoreboard;
+export default Scoreboard;

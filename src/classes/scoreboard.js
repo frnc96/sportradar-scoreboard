@@ -1,8 +1,5 @@
-const Match = require('./match');
-const {
-    isValidTeamName,
-    isValidScore
-} = require('../utils/validations');
+import Match from './match';
+import { isValidTeamName, isValidScore } from '../utils/validations';
 
 
 class Scoreboard {
@@ -73,4 +70,4 @@ class Scoreboard {
 }
 
 
-module.exports = Scoreboard;
+export default Scoreboard;

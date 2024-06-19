@@ -1,4 +1,4 @@
-const Scoreboard = require('../index');
+import Scoreboard from '../index';
 
 describe('Scoreboard', () => {
     let scoreboard;
@@ -26,7 +26,7 @@ describe('Scoreboard', () => {
     });
 
     test('should update the score of an ongoing match', () => {
-        matchId = scoreboard.startMatch('Italy', 'Germany');
+        let matchId = scoreboard.startMatch('Italy', 'Germany');
         scoreboard.updateScore(matchId, 3, 1);
 
         expect(scoreboard.getSummary()).toEqual([
@@ -35,7 +35,7 @@ describe('Scoreboard', () => {
     });
 
     test('should throw an error if match not found', () => {
-        matchId = "random-match-id"
+        let matchId = "random-match-id"
 
         expect(() => {
             scoreboard.updateScore(matchId, 0, 2);
@@ -43,7 +43,7 @@ describe('Scoreboard', () => {
     });
 
     test('should throw an error if non absolute scores are provided', () => {
-        matchId = scoreboard.startMatch('Portugal', 'Norway');
+        let matchId = scoreboard.startMatch('Portugal', 'Norway');
 
         expect(() => {
             scoreboard.updateScore(matchId, -1, 2);
@@ -63,7 +63,7 @@ describe('Scoreboard', () => {
     });
 
     test('should finish an ongoing match', () => {
-        matchId = scoreboard.startMatch('Spain', 'Croatia');
+        const matchId = scoreboard.startMatch('Spain', 'Croatia');
         scoreboard.finishMatch(matchId);
 
         expect(scoreboard.getSummary()).toEqual([]);
@@ -71,27 +71,27 @@ describe('Scoreboard', () => {
 
     test('should get a summary of matches in progress ordered by total score', () => {
         setTimeout(() => {
-            matchId = scoreboard.startMatch('Mexico', 'Canada');
+            let matchId = scoreboard.startMatch('Mexico', 'Canada');
             scoreboard.updateScore(matchId, 0, 5);
         }, 100);
 
         setTimeout(() => {
-            matchId = scoreboard.startMatch('Spain', 'Brazil');
+            let matchId = scoreboard.startMatch('Spain', 'Brazil');
             scoreboard.updateScore(matchId, 10, 2);
         }, 200);
 
         setTimeout(() => {
-            matchId = scoreboard.startMatch('Germany', 'France');
+            let matchId = scoreboard.startMatch('Germany', 'France');
             scoreboard.updateScore(matchId, 2, 2);
         }, 300);
 
         setTimeout(() => {
-            matchId = scoreboard.startMatch('Uruguay', 'Italy');
+            let matchId = scoreboard.startMatch('Uruguay', 'Italy');
             scoreboard.updateScore(matchId, 6, 6);
         }, 400);
 
         setTimeout(() => {
-            matchId = scoreboard.startMatch('Argentina', 'Australia');
+            let matchId = scoreboard.startMatch('Argentina', 'Australia');
             scoreboard.updateScore(matchId, 3, 1);
         }, 500);
 
